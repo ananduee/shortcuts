@@ -4,14 +4,16 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { deleteShortcut } from "./actions";
+import React from "react";
 
 export default async function AppDetailsPage({
   params,
 }: {
   params: { id: string };
 }) {
+  const { id } = await params;
   const app = await db.query.apps.findFirst({
-    where: eq(apps.id, parseInt(params.id)),
+    where: eq(apps.id, parseInt(id)),
   });
 
   if (!app) {

@@ -1,30 +1,40 @@
-import { apps } from "@/db/schema";
+import { apps, shortcuts } from "@/db/schema";
 import { db } from "@/db";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { createShortcut } from "../../actions";
 import NewShortcutPage from "./page";
+import { createShortcut } from "../../actions";
 
 export default async function NewShortcutLayout({
   params,
 }: {
   params: { id: string };
 }) {
+  let { id } = await params;
   const app = await db.query.apps.findFirst({
-    where: eq(apps.id, parseInt(params.id)),
+    where: eq(apps.id, parseInt(id)),
   });
 
   if (!app) {
     return notFound();
   }
+  const appId = parseInt(id);
 
   async function createShortcutAction(formData: FormData) {
     "use server";
-    if (!app) {
-      throw new Error("App not found");
-    }
-    await createShortcut(app.id, formData);
+    await createShortcut(appId, formData);
   }
 
-  return <NewShortcutPage app={app} createShortcutAction={createShortcutAction} />;
+  async function validateKeys(keys: string) {
+    "use server";
+    const existingShortcut = await db.query.shortcuts.findFirst({
+      where: and(
+        eq(shortcuts.keys, keys),
+        eq(shortcuts.appId, appId),
+      ),
+    });
+    return !!existingShortcut;
+  }
+
+  return <NewShortcutPage app={app} createShortcutAction={createShortcutAction} validateKeys={validateKeys} />;
 }
