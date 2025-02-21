@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1740161209426,
+      "tag": "0000_safe_vapor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1740161577259,
+      "tag": "0001_organic_rictor",
+      "breakpoints": true
+    }
+  ]
+}
