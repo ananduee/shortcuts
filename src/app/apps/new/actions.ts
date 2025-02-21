@@ -12,12 +12,16 @@ export async function createApp(formData: FormData) {
     throw new Error("Application name is required");
   }
 
+  const now = new Date();
+
   const app = await db
     .insert(apps)
     .values({
       name,
       description: description ? String(description) : null,
       logo: logo ? String(logo) : null,
+      createdAt: now,
+      updatedAt: now,
     })
     .returning();
 

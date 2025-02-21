@@ -26,3 +26,7 @@ export const userProgress = sqliteTable("user_progress", {
   successCount: integer("success_count").notNull().default(0),
   failureCount: integer("failure_count").notNull().default(0),
 });
+
+export type App = typeof apps.$inferSelect;
+export type Shortcut = typeof shortcuts.$inferSelect;
+export type UserProgress = typeof userProgress.$inferSelect;

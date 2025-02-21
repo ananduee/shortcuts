@@ -10,7 +10,15 @@ export default async function AppsPage() {
     <div className="min-h-screen p-8 pb-20 sm:p-20">
       <main className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Applications</h1>
+          <div>
+            <Link
+              href="/"
+              className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 mb-2 inline-block"
+            >
+              ← Back to Home
+            </Link>
+            <h1 className="text-3xl font-bold">Applications</h1>
+          </div>
           <Link
             href="/apps/new"
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
