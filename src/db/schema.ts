@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { sql, relations } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const apps = sqliteTable("apps", {
@@ -26,6 +26,13 @@ export const userProgress = sqliteTable("user_progress", {
   successCount: integer("success_count").notNull().default(0),
   failureCount: integer("failure_count").notNull().default(0),
 });
+
+export const shortcutsRelations = relations(shortcuts, ({ one }) => ({
+  progress: one(userProgress, {
+    fields: [shortcuts.id],
+    references: [userProgress.shortcutId],
+  }),
+}));
 
 export type App = typeof apps.$inferSelect;
 export type Shortcut = typeof shortcuts.$inferSelect;
